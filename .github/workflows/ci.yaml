@@ -1,0 +1,57 @@
+# ref: https://docs.github.com/ja/actions/automating-builds-and-tests/building-and-testing-python
+
+name: ci-test # ワークフローの名前
+
+permissions: write-all # READMEにバッチを付けるために書き込み権限を与える？
+
+on: # トリガーイベント
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs: # jobの集合
+  pytest: # jobのid
+    runs-on: ubuntu-latest # jobが実行されるマシン(セルフホストも可能)
+
+    strategy:
+      matrix:
+        python-version: [3.8, 3.10]
+
+    steps:
+      # このリポジトリを，上で指定したruns-onマシンにチェックアウト(git clone 的な)
+      - name: checkout
+        uses: actions/checkout@v3
+
+      # 複数バージョンのpython環境を構築
+      - name: set up python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # パッケージの用意
+      - name: install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      # pytestモジュールを使用してテストを実行
+      - name: pytest
+        run: |
+          pytest tests/test.py -v\
+          --junitxml=junit/results-${{ matrix.python-version }}.xml
+        continue-on-error: true
+
+      # テストの結果を表示
+      - name: upload pytest result
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-results-${{ matrix.python-version }}
+          path: junit/results-${{ matrix.python-version }}.xml
+
+      # テストの結果をダウンロード?
+      - name: download pytest result
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact-data
