@@ -38,8 +38,7 @@ jobs: # jobの集合
       # pytestモジュールを使用してテストを実行
       - name: pytest
         run: |
-          pytest tests/test.py -v\
-          --junitxml=junit/results-${{ matrix.python-version }}.xml
+          pytest tests/test.py -v --junitxml=junit/results-${{ matrix.python-version }}.xml
         continue-on-error: true
 
       # テストの結果を表示
