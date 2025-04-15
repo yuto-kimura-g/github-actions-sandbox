@@ -51,6 +51,6 @@ jobs: # jobの集合
 
       # テストの結果をダウンロード?
       - name: download pytest result
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: pytest-results-${{ matrix.python-version }}
