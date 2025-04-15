@@ -1,0 +1,44 @@
+name: "Size Label"
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  add-size-label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get Pull Request details and calculate diff size
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr_diff=$(gh pr view ${{ github.event.pull_request.number }} --json additions,deletions)
+          additions=$(echo "$pr_diff" | jq '.additions')
+          deletions=$(echo "$pr_diff" | jq '.deletions')
+          total_diff=$((additions + deletions))
+
+          if [ $total_diff -le 9 ]; then
+              label="size/XS"
+          elif [ $total_diff -le 29 ]; then
+              label="size/S"
+          elif [ $total_diff -le 99 ]; then
+              label="size/M"
+          elif [ $total_diff -le 499 ]; then
+              label="size/L"
+          elif [ $total_diff -le 999 ]; then
+              label="size/XL"
+          else
+              label="size/XXL"
+          fi
+
+          echo "label=$label" >> $GITHUB_ENV
+
+      - name: Add size label to Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "${{ env.label }}"
