@@ -21,7 +21,7 @@ jobs: # jobの集合
     steps:
       # このリポジトリを，上で指定したruns-onマシンにチェックアウト(git clone 的な)
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 複数バージョンのpython環境を構築
       - name: set up python ${{ matrix.python-version }}
