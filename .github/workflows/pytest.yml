@@ -44,7 +44,7 @@ jobs: # jobの集合
       # テストの結果を表示
       - name: upload pytest result
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-results-${{ matrix.python-version }}
           path: junit/results-${{ matrix.python-version }}.xml
