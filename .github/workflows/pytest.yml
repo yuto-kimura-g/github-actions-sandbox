@@ -25,7 +25,7 @@ jobs: # jobの集合
 
       # 複数バージョンのpython環境を構築
       - name: set up python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
