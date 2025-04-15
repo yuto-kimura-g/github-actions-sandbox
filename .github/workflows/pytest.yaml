@@ -1,14 +1,14 @@
 # ref: https://docs.github.com/ja/actions/automating-builds-and-tests/building-and-testing-python
 
-name: ci-test # ワークフローの名前
+name: Python Unit Test # ワークフローの名前
 
 permissions: write-all # READMEにバッチを付けるために書き込み権限を与える？
 
 on: # トリガーイベント
-  push:
   pull_request:
-    branches:
-      - main
+    paths:
+      - "**.py"
+  workflow_dispatch:
 
 jobs: # jobの集合
   pytest: # jobのid
