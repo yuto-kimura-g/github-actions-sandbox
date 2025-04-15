@@ -4,6 +4,12 @@
 
 github actions の練習
 
+NOTE
+- 設定ファイルは [.github/](./.github/) にある
+- できる限り公式のもの(github.com/actions/*)を使う
+- 最新版を使用する：ネットの情報は古いものが多いので注意。古いとエラーで動かないこともある。dependabotを導入したので、もう大丈夫のはず
+- ラベルは k/k (github.com/kubernetes/kubernetes) を参考にしてみた
+
 ## References
 - https://docs.github.com/ja/actions/automating-builds-and-tests/building-and-testing-python
 - https://github.com/actions/stale
