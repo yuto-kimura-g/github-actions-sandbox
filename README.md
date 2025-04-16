@@ -5,9 +5,10 @@
 github actions の練習
 
 NOTE
-- 設定ファイルは [.github/](./.github/) にある
-- できる限り公式のもの(github.com/actions/*)を使う
+- 設定ファイルは [`.github/`](./.github/) にある
+- actionは、信頼できる団体／作者のもの(github.com/actions/* や github.com/github/* など)を使う
 - 最新版を使用する：ネットの情報は古いものが多いので注意。古いとエラーで動かないこともある。dependabotを導入したので、もう大丈夫のはず
+- `.yaml`と`.yml`は区別されるらしい（github actionsはyml）
 - ラベルは k/k (github.com/kubernetes/kubernetes) を参考にしてみた
 
 ## References
